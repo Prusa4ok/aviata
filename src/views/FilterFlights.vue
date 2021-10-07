@@ -20,7 +20,7 @@
 import FilterUI from "../sharing/components/FilterUI.vue";
 import CardTicket from "../sharing/components/CardTicket.vue";
 import results from "../sharing/data/results.json";
-import filterItems from "../sharing/data/filtersDate.json";
+import filterItems from "../sharing/data/filtersData.json";
 
 export default {
   name: "filterFlights",
