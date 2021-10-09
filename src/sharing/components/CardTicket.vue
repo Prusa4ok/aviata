@@ -4,13 +4,13 @@
       <div class="content content__carrier">
         <img
           class="icon-iata"
-          src="https://aviata.kz/static/airline-logos/80x80/KC.png"
+          :src="'https://aviata.kz/static/airline-logos/80x80/'+ iata + '.png'"
           alt="KC"
         />
-        <p class="text-m text-wb">Air Astana</p>
+        <p class="text-m text-wb">{{ carrierName }}</p>
       </div>
       <div>
-        <p class="">25 ноя, вс</p>
+        <p class="">{{ departureDate }}</p>
         <p class="text-xl text-wb">23:25</p>
       </div>
       <div>
@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="form-control">
-      <p class="text-l">590 240 ₸</p>
+      <p class="text-l">{{ amount }} ₸</p>
       <button class="btn btn__primary text-wbb text-l">Выбрать</button>
       <p class="text-s accent-dark-gray">Цена за всех пассажиров</p>
       <div class="content">
@@ -56,6 +56,32 @@
 <script>
 export default {
   name: "CardTicket",
+  props: {
+    amount: {
+      type: String,
+      default: () => {
+        return "Нет значения";
+      },
+    },
+    departureDate: {
+      type: String,
+      default: () => {
+        return "Нет значения";
+      }
+    },
+    carrierName: {
+      type: String,
+      default: () => {
+        return "Нет значения";
+      }
+    },
+    iata: {
+      type: String,
+      default: () => {
+        return "Нет значения";
+      }
+    },
+  },
 };
 </script>
 

@@ -15,6 +15,11 @@
       <card-ticket
         v-for="(ticket, index) in results.flights"
         :key="index"
+        
+        :amount="ticket.itineraries[0][0].price.amount"
+        :departureDate="ticket.itineraries[0][0].segments[0].dep_time"
+        :carrierName="ticket.itineraries[0][0].segments[0].carrier_name"
+        :iata="ticket.itineraries[0][0].segments[0].carrier"
       />
     </div>
   </div>
@@ -46,7 +51,8 @@ export default {
 
 <style>
 .wrapper {
-  width: 100vw;
+  width: auto;
+  max-width: 100vw;
   min-height: 100vh;
   display: flex;
   justify-content: center;
