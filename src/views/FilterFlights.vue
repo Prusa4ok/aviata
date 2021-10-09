@@ -17,9 +17,14 @@
         :key="index"
         
         :amount="ticket.itineraries[0][0].price.amount"
+        :arriveDate="ticket.itineraries[0][0].segments[0].arr_time"
         :departureDate="ticket.itineraries[0][0].segments[0].dep_time"
         :carrierName="ticket.itineraries[0][0].segments[0].carrier_name"
         :iata="ticket.itineraries[0][0].segments[0].carrier"
+        :travelTime="ticket.itineraries[0][0].traveltime"
+        :refundable="ticket.itineraries[0][0].refundable"
+        :destCode="ticket.itineraries[0][0].segments[0].dest_code"
+        :originCode="ticket.itineraries[0][0].segments[0].origin_code"
       />
     </div>
   </div>

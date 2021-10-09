@@ -10,21 +10,28 @@
         <p class="text-m text-wb">{{ carrierName }}</p>
       </div>
       <div>
-        <p class="">{{ departureDate }}</p>
-        <p class="text-xl text-wb">23:25</p>
+        <p class="">{{ formatedDate(departureDate).date }}</p>
+        <p class="text-xl text-wb">{{ formatedDate(departureDate).time }}</p>
       </div>
       <div>
         <div class="form-from-to">
-          <p class="accent-gray">ALA</p>
-          <p class="">4 H 20 M</p>
-          <p class="accent-gray">TSE</p>
+          <p class="accent-gray">{{ originCode }}</p>
+          <p class="">{{ formatedTime(travelTime) }}</p>
+          <p class="accent-gray">{{ destCode }}</p>
         </div>
         <img src="../../assets/images/0----0.svg" alt="from-to" />
         <p class="accent-orange">accros shym, 1 h 50 m</p>
       </div>
       <div>
-        <p class="">25 ноя, вс <span class="text-xs accent-red">+1</span></p>
-        <p class="text-xl text-wb">23:25</p>
+        <p class="">{{ formatedDate(arriveDate).date }}<span class="text-xs accent-red">
+            {{
+              formatedDate(arriveDate).date === formatedDate(departureDate).date
+                ? ""
+                : "+1"
+            }}
+          </span>
+        </p>
+        <p class="text-xl text-wb">{{ formatedDate(arriveDate).time }}</p>
       </div>
       <a class="form-link" href="#">
         <p class="link accent-blue">Детали перелета</p>
@@ -32,7 +39,7 @@
       <a class="form-link" href="#">
         <p class="link accent-blue">Условия тарифа</p>
       </a>
-      <div class="content content__returnable">
+      <div  v-if="!refundable" class="content content__returnable">
         <img
           class="icon-16"
           src="../../assets/icons/icon-non-refundeble.svg"
@@ -63,6 +70,12 @@ export default {
         return "Нет значения";
       },
     },
+    arriveDate: {
+      type: String,
+      default: () => {
+        return "Нет значения";
+      }
+    },
     departureDate: {
       type: String,
       default: () => {
@@ -81,7 +94,47 @@ export default {
         return "Нет значения";
       }
     },
+    destCode: {
+      type: String,
+      default: () => {
+        return "Нет значения";
+      }
+    },
+    originCode: {
+      type: String,
+      default: () => {
+        return "Нет значения";
+      }
+    },
+    travelTime: {
+      type: Number,
+      default: () => {
+        return 0;
+      }
+    },
+    refundable: {
+      type: Boolean,
+      default: () => {
+        return false;
+      }
+    },
   },
+  methods: {
+    formatedDate(value) {
+      let array = value.split(' ');
+      const formatedTime = array.pop();
+      const formatedValue = array.join(' ');
+      return {
+        date: formatedValue,
+        time: formatedTime,
+      };
+    },
+    formatedTime(value) {
+      const minutes = (value % 3600) / 60;
+      const hours = (value / 60 - minutes) / 60;
+      return `${hours ? hours + " ч" : ""} ${minutes ? minutes + " м" : ""}`;
+    }
+  }
 };
 </script>
 
