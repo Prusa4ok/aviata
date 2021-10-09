@@ -23,6 +23,8 @@
         :iata="ticket.itineraries[0][0].segments[0].carrier"
         :travelTime="ticket.itineraries[0][0].traveltime"
         :refundable="ticket.itineraries[0][0].refundable"
+        :stops="ticket.itineraries[0][0].segments[0].stops"
+        :baggage="ticket.itineraries[0][0].segments[0].baggage_options"
         :destCode="ticket.itineraries[0][0].segments[0].dest_code"
         :originCode="ticket.itineraries[0][0].segments[0].origin_code"
       />
@@ -48,9 +50,6 @@ export default {
     FilterUI,
     CardTicket,
   },
-  created() {
-    console.log(typeof(results.airlines));
-  }
 };
 </script>
 

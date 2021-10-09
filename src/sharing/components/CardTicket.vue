@@ -20,7 +20,7 @@
           <p class="accent-gray">{{ destCode }}</p>
         </div>
         <img src="../../assets/images/0----0.svg" alt="from-to" />
-        <p class="accent-orange">accros shym, 1 h 50 m</p>
+        <p v-if="stops" class="accent-orange">с пересадкой</p>
       </div>
       <div>
         <p class="">{{ formatedDate(arriveDate).date }}<span class="text-xs accent-red">
@@ -53,7 +53,9 @@
       <button class="btn btn__primary text-wbb text-l">Выбрать</button>
       <p class="text-s accent-dark-gray">Цена за всех пассажиров</p>
       <div class="content">
-        <p class="text-s mr-6">Нет багажа</p>
+        <p class="text-s mr-6">
+          {{ baggage[0].value ? "Багаж " + baggage[0].value + " кг" : "Нет багажа" }}
+        </p>
         <button class="btn btn__secondary text-s text-wb accent-purple">+ Добавить багаж</button>
       </div>
     </div>
@@ -117,6 +119,14 @@ export default {
       default: () => {
         return false;
       }
+    },
+    stops: {
+      type: Number,
+      default: () => {
+        return false;
+      }
+    },
+    baggage: {
     },
   },
   methods: {
