@@ -4,7 +4,7 @@
       <div class="content content__carrier">
         <img
           class="icon-iata"
-          :src="'https://aviata.kz/static/airline-logos/80x80/'+ iata + '.png'"
+          :src="'https://aviata.kz/static/airline-logos/80x80/' + iata + '.png'"
           alt="KC"
         />
         <p class="text-m text-wb">{{ carrierName }}</p>
@@ -23,7 +23,9 @@
         <p v-if="stops" class="accent-orange">с пересадкой</p>
       </div>
       <div>
-        <p class="">{{ formatedDate(arriveDate).date }}<span class="text-xs accent-red">
+        <p class="">
+          {{ formatedDate(arriveDate).date
+          }}<span class="text-xs accent-red">
             {{
               formatedDate(arriveDate).date === formatedDate(departureDate).date
                 ? ""
@@ -39,7 +41,7 @@
       <a class="form-link" href="#">
         <p class="link accent-blue">Условия тарифа</p>
       </a>
-      <div  v-if="!refundable" class="content content__returnable">
+      <div v-if="!refundable" class="content content__returnable">
         <img
           class="icon-16"
           src="../../assets/icons/icon-non-refundeble.svg"
@@ -54,9 +56,15 @@
       <p class="text-s accent-dark-gray">Цена за всех пассажиров</p>
       <div class="content">
         <p class="text-s mr-6">
-          {{ baggage[0].value ? "Багаж " + baggage[0].value + " кг" : "Нет багажа" }}
+          {{
+            baggage[0].value
+              ? "Багаж " + baggage[0].value + " кг"
+              : "Нет багажа"
+          }}
         </p>
-        <button class="btn btn__secondary text-s text-wb accent-purple">+ Добавить багаж</button>
+        <button class="btn btn__secondary text-s text-wb accent-purple">
+          + Добавить багаж
+        </button>
       </div>
     </div>
   </div>
@@ -76,64 +84,63 @@ export default {
       type: String,
       default: () => {
         return "Нет значения";
-      }
+      },
     },
     departureDate: {
       type: String,
       default: () => {
         return "Нет значения";
-      }
+      },
     },
     carrierName: {
       type: String,
       default: () => {
         return "Нет значения";
-      }
+      },
     },
     iata: {
       type: String,
       default: () => {
         return "Нет значения";
-      }
+      },
     },
     destCode: {
       type: String,
       default: () => {
         return "Нет значения";
-      }
+      },
     },
     originCode: {
       type: String,
       default: () => {
         return "Нет значения";
-      }
+      },
     },
     travelTime: {
       type: Number,
       default: () => {
         return 0;
-      }
+      },
     },
     refundable: {
       type: Boolean,
       default: () => {
         return false;
-      }
+      },
     },
     stops: {
       type: Number,
       default: () => {
         return false;
-      }
+      },
     },
-    baggage: {
-    },
+    baggage: {},
   },
   methods: {
     formatedDate(value) {
-      let array = value.split(' ');
+      let array = value.split(" ");
       const formatedTime = array.pop();
-      const formatedValue = array.join(' ');
+      const formatedValue = array.join(" ");
       return {
         date: formatedValue,
         time: formatedTime,
@@ -143,8 +150,8 @@ export default {
       const minutes = (value % 3600) / 60;
       const hours = (value / 60 - minutes) / 60;
       return `${hours ? hours + " ч" : ""} ${minutes ? minutes + " м" : ""}`;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -267,29 +274,29 @@ export default {
 }
 
 .accent-purple {
-  color: #5763B3;
+  color: #5763b3;
 }
 
 .btn {
   cursor: pointer;
-  transition: .1s;
+  transition: 0.1s;
   border-radius: 4px;
   border: none;
 }
 
 .btn:active {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .btn__primary {
-  background-color: #55BB06;
+  background-color: #55bb06;
   padding: 8px 12px;
   color: #fff;
 }
 
 .btn__secondary {
   padding: 3px 8px;
-  background-color: #EAF0FA;
+  background-color: #eaf0fa;
 }
 
 .mr-6 {

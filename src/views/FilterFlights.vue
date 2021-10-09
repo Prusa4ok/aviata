@@ -4,18 +4,18 @@
       <FilterUI
         title="Опции тарифа"
         :items="filterItems.rate"
+        @onChange="changeOptions"
       />
       <FilterUI
         title="Авиакомпании"
-        :items="results.airlines"
+        :items="filters.carriers"
+        @onChange="changeCarriers"
       />
     </div>
-    <div class="form-filters"      
-    >
+    <div class="form-filters">
       <card-ticket
-        v-for="(ticket, index) in results.flights"
+        v-for="(ticket, index) in filteredArray"
         :key="index"
-        
         :amount="ticket.itineraries[0][0].price.amount"
         :arriveDate="ticket.itineraries[0][0].segments[0].arr_time"
         :departureDate="ticket.itineraries[0][0].segments[0].dep_time"
@@ -44,11 +44,92 @@ export default {
     return {
       results,
       filterItems,
+      dataBase: [],
+      filters: {
+        options: {},
+        carriers: {},
+      },
+      filteredArray: [],
     };
   },
   components: {
     FilterUI,
     CardTicket,
+  },
+  created() {
+    this.dataBase = results.flights.slice();
+    this.filteredArray = this.dataBase.slice();
+    this.dataBase.forEach((item) => {
+      this.filters.carriers[item.validating_carrier] =
+        item.itineraries[0][0].carrier_name;
+    });
+  },
+  methods: {
+    changeOptions(value) {
+      this.filters.options[value] = !this.filters.options[value];
+      this.filterArray("options");
+    },
+    changeCarriers(value) {
+      // eslint-disable-next-line no-extra-boolean-cast
+      if (!!this.filters.carriers[value][0]) {
+        Object.keys(this.filters.carriers).forEach((carrier) => {
+          this.filters.carriers[carrier] = false;
+        });
+      }
+      this.filters.carriers[value] = !this.filters.carriers[value];
+      this.filterArray("carriers");
+    },
+    filterArray(element) {
+      let newArray = [];
+
+      if (element === "options") {
+        const options = Object.keys(this.filters.options);
+        const trueOptions = [];
+
+        options.forEach((option) => {
+          if (this.filters.options[option]) {
+            trueOptions.push(option);
+          }
+        });
+        newArray = this.dataBase.filter((item) => {
+          if (trueOptions.includes("direct")) {
+            if (item.itineraries[0][0].stops === 0) {
+              return item;
+            }
+          }
+          if (trueOptions.includes("baggage")) {
+            if (
+              item.itineraries[0][0].segments[0].baggage_options[0].value > 0
+            ) {
+              return item;
+            }
+          }
+          if (trueOptions.includes("returnable")) {
+            if (item.refundable) {
+              return item;
+            }
+          }
+        });
+      }
+
+      if (element === "carriers") {
+        const carriers = Object.keys(this.filters.carriers);
+        const trueCarriers = [];
+        carriers.forEach((carrier) => {
+          if (this.filters.carriers[carrier]) {
+            trueCarriers.push(carrier);
+          }
+        });
+
+        newArray = this.dataBase.filter((item) => {
+          if (trueCarriers.includes(item.validating_carrier)) {
+            return item;
+          }
+        });
+      }
+
+      this.filteredArray = newArray.slice();
+    },
   },
 };
 </script>

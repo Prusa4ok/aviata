@@ -3,7 +3,7 @@
     <p class="title">{{ title }}</p>
     <div class="form-control">
       <div class="form-checkbox" v-for="(item, index) in items" :key="index">
-        <input type="checkbox" :name="item.key" />
+        <input type="checkbox" :name="item.key" @change="onChange(index)" />
         <p class="text-content">{{ item }}</p>
       </div>
     </div>
@@ -20,6 +20,11 @@ export default {
     },
     items: {
       type: Object,
+    },
+  },
+  methods: {
+    onChange(value) {
+      this.$emit("onChange", value);
     },
   },
 };
