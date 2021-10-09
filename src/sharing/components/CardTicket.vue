@@ -41,7 +41,15 @@
         <p class="text-s accent-dark-gray">Невозвратный</p>
       </div>
     </div>
-    <div class="form-control"></div>
+    <div class="form-control">
+      <p class="text-l">590 240 ₸</p>
+      <button class="btn btn__primary text-wbb text-l">Выбрать</button>
+      <p class="text-s accent-dark-gray">Цена за всех пассажиров</p>
+      <div class="content">
+        <p class="text-s">Нет багажа</p>
+        <button class="btn btn__secondary text-s text-wb accent-purple">+ Добавить багаж</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -83,8 +91,10 @@ export default {
 .form-control {
   width: 240px;
   background-color: #f5f5f5;
+  justify-content: space-between;
   display: flex;
   flex-direction: column;
+  padding: 12px 20px;
 }
 
 .form-from-to {
@@ -165,5 +175,31 @@ export default {
 
 .accent-blue {
   color: #7284e4;
+}
+
+.accent-purple {
+  color: #5763B3;
+}
+
+.btn {
+  cursor: pointer;
+  transition: .1s;
+  border-radius: 4px;
+  border: none;
+}
+
+.btn:active {
+  opacity: .5;
+}
+
+.btn__primary {
+  background-color: #55BB06;
+  padding: 8px 12px;
+  color: #fff;
+}
+
+.btn__secondary {
+  padding: 3px 8px;
+  background-color: #EAF0FA;
 }
 </style>
