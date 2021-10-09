@@ -67,7 +67,7 @@ export default {
   methods: {
     changeOptions(value) {
       this.filters.options[value] = !this.filters.options[value];
-      this.filterArray("options");
+      this.filterArray();
     },
     changeCarriers(value) {
       // eslint-disable-next-line no-extra-boolean-cast
@@ -77,58 +77,64 @@ export default {
         });
       }
       this.filters.carriers[value] = !this.filters.carriers[value];
-      this.filterArray("carriers");
+      this.filterArray();
     },
-    filterArray(element) {
+    filterArray() {
+      this.filteredArray = this.dataBase.slice();
+    
       let newArray = [];
 
-      if (element === "options") {
-        const options = Object.keys(this.filters.options);
-        const trueOptions = [];
+      const options = Object.keys(this.filters.options);
+      const trueOptions = [];
 
-        options.forEach((option) => {
-          if (this.filters.options[option]) {
-            trueOptions.push(option);
+      options.forEach((option) => {
+        if (this.filters.options[option]) {
+          trueOptions.push(option);
+        }
+      });
+    
+      const carriers = Object.keys(this.filters.carriers);
+      const trueCarriers = [];
+      
+      carriers.forEach((carrier) => {
+        if (this.filters.carriers[carrier]) {
+          trueCarriers.push(carrier);
+        }
+      });
+      
+      newArray = this.dataBase.filter((item) => {
+      
+        if (trueOptions.includes("direct")) {
+          if (item.itineraries[0][0].stops !== 0) {
+            return;
           }
-        });
-        newArray = this.dataBase.filter((item) => {
-          if (trueOptions.includes("direct")) {
-            if (item.itineraries[0][0].stops === 0) {
-              return item;
-            }
+        }
+        
+        if (trueOptions.includes("baggage")) {
+          if (
+            item.itineraries[0][0].segments[0].baggage_options[0].value < 1
+          ) {
+            return;
           }
-          if (trueOptions.includes("baggage")) {
-            if (
-              item.itineraries[0][0].segments[0].baggage_options[0].value > 0
-            ) {
-              return item;
-            }
+        }
+        
+        if (trueOptions.includes("returnable")) {
+          if (!item.refundable) {
+            return;
           }
-          if (trueOptions.includes("returnable")) {
-            if (item.refundable) {
-              return item;
-            }
-          }
-        });
-      }
-
-      if (element === "carriers") {
-        const carriers = Object.keys(this.filters.carriers);
-        const trueCarriers = [];
-        carriers.forEach((carrier) => {
-          if (this.filters.carriers[carrier]) {
-            trueCarriers.push(carrier);
-          }
-        });
-
-        newArray = this.dataBase.filter((item) => {
-          if (trueCarriers.includes(item.validating_carrier)) {
-            return item;
-          }
-        });
-      }
+        }
+        
+        if (!trueCarriers.includes(item.validating_carrier)) {
+          return
+        }
+        return item;
+      });
 
       this.filteredArray = newArray.slice();
+      
+      if (trueOptions.length === 0 && trueCarriers.length === 0) {
+        this.filteredArray = this.dataBase.slice();
+      }
     },
   },
 };
