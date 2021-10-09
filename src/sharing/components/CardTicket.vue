@@ -46,7 +46,7 @@
       <button class="btn btn__primary text-wbb text-l">Выбрать</button>
       <p class="text-s accent-dark-gray">Цена за всех пассажиров</p>
       <div class="content">
-        <p class="text-s">Нет багажа</p>
+        <p class="text-s mr-6">Нет багажа</p>
         <button class="btn btn__secondary text-s text-wb accent-purple">+ Добавить багаж</button>
       </div>
     </div>
@@ -201,5 +201,9 @@ export default {
 .btn__secondary {
   padding: 3px 8px;
   background-color: #EAF0FA;
+}
+
+.mr-6 {
+  margin-right: 6px;
 }
 </style>

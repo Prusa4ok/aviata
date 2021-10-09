@@ -1,17 +1,21 @@
 <template>
   <div class="wrapper">
     <div class="form-filters">
-      <FilterUI 
+      <FilterUI
         title="Опции тарифа"
-        :items="filterItems.rate"  
+        :items="filterItems.rate"
       />
-      <FilterUI 
-        title="Авиакомпании" 
-        :items="results.airlines"  
+      <FilterUI
+        title="Авиакомпании"
+        :items="results.airlines"
       />
     </div>
-    <div>
-      <card-ticket />
+    <div class="form-filters"      
+    >
+      <card-ticket
+        v-for="(ticket, index) in results.flights"
+        :key="index"
+      />
     </div>
   </div>
 </template>
@@ -43,7 +47,7 @@ export default {
 <style>
 .wrapper {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   grid-gap: 20px;
